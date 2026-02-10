@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Visualization</title>
+    <style>
+        /* Energy Blue Color Scheme - Professional Data Analytics Theme */
+        :root {
+            --header-primary: #1e3a8a;
+            --header-secondary: #3b82f6;
+            --bg-main: #f0f9ff;
+            --card-bg: #ffffff;
+            --primary-blue: #3b82f6;
+            --energy-orange: #f59e0b;
+            --success-green: #10b981;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--header-primary) 0%, var(--header-secondary) 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(30, 58, 138, 0.25);
+        }
+        
+        h1 {
+            color: var(--text-dark);
+            margin-top: 0;
+            border-bottom: 3px solid var(--primary-blue);
+            padding-bottom: 15px;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-buttons a, .nav-buttons button {
+            padding: 12px 24px;
+            background: var(--primary-blue);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .nav-buttons a:hover, .nav-buttons button:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+        
+        .nav-buttons a.active {
+            background: var(--energy-orange);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-box {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #2563eb 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
+        }
+        
+        .stat-box .label {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+        
+        .stat-box .value {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .chart-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+        .chart-container embed {
+            max-width: 100%;
+            height: auto;
+        }
+        .anomalies-section {
+            margin: 30px 0;
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .anomalies-section h3 {
+            margin-top: 0;
+            color: #856404;
+        }
+        .anomaly-list {
+            list-style: none;
+            padding: 0;
+        }
+        .anomaly-item {
+            background: white;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .anomaly-name {
+            font-weight: 600;
+            color: #333;
+        }
+        .anomaly-value {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #6c757d;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+        .info-box {
+            background: #d1ecf1;
+            border-left: 5px solid #0c5460;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+            color: #0c5460;
+        }
+        /* Side legend for comparison view */
+        .chart-with-legend {
+            display: flex;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .side-legend {
+            flex: 0 0 220px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .side-legend h4 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 0.95em;
+            font-weight: 600;
+        }
+        .legend-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            font-size: 0.85em;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            transition: all 0.2s;
+        }
+        .legend-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
+        .legend-color {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            flex-shrink: 0;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .legend-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .legend-text {
+            font-weight: 600;
+            color: #333;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-bottom: 4px;
+        }
+        .legend-value {
+            font-size: 0.85em;
+            color: #666;
+            font-weight: 500;
+        }
+        /* Export buttons styling */
+        .export-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .export-section h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .export-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        .export-btn.csv {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+        }
+        .export-btn.csv:hover {
+            background: linear-gradient(135deg, #218838 0%, #1bb485 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+        .export-btn.excel {
+            background: linear-gradient(135deg, #007bff 0%, #0069d9 100%);
+            color: white;
+        }
+        .export-btn.excel:hover {
+            background: linear-gradient(135deg, #0069d9 0%, #0056b3 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+        }
+        .export-btn.summary {
+            background: linear-gradient(135deg, #6f42c1 0%, #5a32a3 100%);
+            color: white;
+        }
+        .export-btn.summary:hover {
+            background: linear-gradient(135deg, #5a32a3 0%, #4a2885 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(111, 66, 193, 0.4);
+        }
+        .export-btn.chart {
+            background: linear-gradient(135deg, #fd7e14 0%, #e8590c 100%);
+            color: white;
+        }
+        .export-btn.chart:hover {
+            background: linear-gradient(135deg, #e8590c 0%, #d44606 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(253, 126, 20, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Fuel Consumption Prediction Visualization</h1>
+        
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <a href="/clustergraph" {% if chart_type is not defined or chart_type == 'cluster' %}class="active"{% endif %}>🔢 Cluster View</a>
+            {% if has_site_data or chart_type in ['site', 'distribution', 'comparison'] %}
+                <a href="/sitegraph" {% if chart_type == 'site' %}class="active"{% endif %}>🏢 Site View (Top 20)</a>
+                <a href="/distributiongraph" {% if chart_type == 'distribution' %}class="active"{% endif %}>📈 Distribution</a>
+                <a href="/comparisonview" {% if chart_type == 'comparison' %}class="active"{% endif %}>⚖️ Comparison</a>
+            {% endif %}
+            <a href="/timeseriesgraph" {% if chart_type == 'timeseries' %}class="active"{% endif %}>📅 Time Series</a>
+        </div>
+        
+        <!-- Statistics Section -->
+        {% if stats %}
+        <div class="stats-container">
+            {% if stats.total_predictions %}
+            <div class="stat-box">
+                <div class="label">Total Predictions</div>
+                <div class="value">{{ stats.total_predictions }}</div>
+            </div>
+            {% endif %}
+            
+            {% if stats.total_sites %}
+            <div class="stat-box">
+                <div class="label">Total Sites</div>
+                <div class="value">{{ stats.total_sites }}</div>
+            </div>
+            {% endif %}
+            
+            {% if stats.total_clusters %}
+            <div class="stat-box">
+                <div class="label">Total Clusters</div>
+                <div class="value">{{ stats.total_clusters }}</div>
+            </div>
+            {% endif %}
+            
+            {% if stats.mean %}
+            <div class="stat-box">
+                <div class="label">Average Consumption</div>
+                <div class="value">{{ stats.mean }}L</div>
+            </div>
+            {% endif %}
+            
+            {% if stats.median %}
+            <div class="stat-box">
+                <div class="label">Median</div>
+                <div class="value">{{ stats.median }}L</div>
+            </div>
+            {% endif %}
+            
+            {% if stats.min %}
+            <div class="stat-box">
+                <div class="label">Min</div>
+                <div class="value">{{ stats.min }}L</div>
+            </div>
+            {% endif %}
+            
+            {% if stats.max %}
+            <div class="stat-box">
+                <div class="label">Max</div>
+                <div class="value">{{ stats.max }}L</div>
+            </div>
+            {% endif %}
+            
+            {% if stats.anomaly_count is defined %}
+            <div class="stat-box">
+                <div class="label">🚨 Potential anomalies</div>
+                <div class="value">{{ stats.anomaly_count }}</div>
+            </div>
+            {% endif %}
+            
+            {% if stats.high_consumption_count %}
+            <div class="stat-box">
+                <div class="label">⚠️ High Consumption</div>
+                <div class="value">{{ stats.high_consumption_count }}</div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <!-- Export Section -->
+        <div class="export-section">
+            <h3>📥 Export & Download Options</h3>
+            <div class="export-buttons">
+                <a href="/export/predictions/csv" class="export-btn csv">
+                    <span>📄</span> Download CSV
+                </a>
+                <a href="/export/predictions/excel" class="export-btn excel">
+                    <span>📊</span> Download Excel
+                </a>
+                <a href="/export/summary" class="export-btn summary">
+                    <span>📋</span> Download Summary Report
+                </a>
+                {% if chart_type %}
+                <a href="/export/chart/{{ chart_type }}" class="export-btn chart">
+                    <span>📈</span> Download Chart (SVG)
+                </a>
+                <a href="/export/chart/{{ chart_type }}/png" class="export-btn chart">
+                    <span>🖼️</span> Download Chart (PNG)
+                </a>
+                {% endif %}
+            </div>
+            <p style="margin: 10px 0 0 0; font-size: 12px; color: #6c757d;">
+                💡 <strong>Tip:</strong> CSV and Excel files contain complete prediction data. 
+                Summary report includes statistics and top clusters. 
+                Charts are exported in SVG (vector) or PNG (image) format matching the app's visualization.
+                <em>Note: Legends in exported charts appear inline (standard format) rather than as side panels.</em>
+            </p>
+        </div>
+        
+        <!-- Chart Display with Side Legend for Comparison View -->
+        {% if chart_type == 'comparison' and stats.site_legend_detailed %}
+        <div class="chart-with-legend">
+            <!-- Left Side Legend -->
+            <div class="side-legend">
+                <h4>🏆 High Consumption Sites<br><small>(by total)</small></h4>
+                <ul class="legend-list">
+                    {% for item in stats.site_legend_detailed %}
+                    <li class="legend-item">
+                        <span class="legend-color" style="background: {{ item.color }};"></span>
+                        <div class="legend-info">
+                            <div class="legend-text" title="{{ item.site }}">{{ item.rank }}. {{ item.site_short }}</div>
+                            <div class="legend-value">{{ item.value }}L ({{ item.percentage }})</div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <!-- Chart -->
+            <div class="chart-container" style="flex: 1; margin: 0;">
+                <embed type="image/svg+xml" src="{{ graph_data|safe }}">
+            </div>
+        </div>
+        {% elif chart_type == 'timeseries' and series_legend %}
+        <div class="chart-with-legend">
+            <!-- Left Side Legend -->
+            <div class="side-legend">
+                <h4>Time Series Legend</h4>
+                <ul class="legend-list">
+                    {% for series in series_legend %}
+                    <li class="legend-item">
+                        <span class="legend-color" style="background: {{ series.color }};"></span>
+                        <div class="legend-info">
+                            <div class="legend-text">{{ series.name }}</div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <!-- Chart -->
+            <div class="chart-container" style="flex: 1; margin: 0;">
+                <embed type="image/svg+xml" src="{{ graph_data|safe }}">
+            </div>
+        </div>
+        {% else %}
+        <!-- Regular Chart Display (no side legend) -->
+        <div class="chart-container">
+            <embed type="image/svg+xml" src="{{ graph_data|safe }}">
+        </div>
+        {% endif %}
+        
+        <!-- Anomalies Section -->
+        {% if anomalies and anomalies|length > 0 %}
+        <div class="anomalies-section">
+            <h3>⚠️ {% if chart_type == 'site' %}High Consumption Sites{% else %}Anomalies Detected{% endif %}</h3>
+            <p>
+                {% if chart_type == 'site' %}
+                    These sites have significantly higher fuel consumption than average (threshold: {{ stats.threshold }}L):
+                {% else %}
+                    These clusters have unusually high fuel consumption (above threshold of {{ stats.threshold }}L):
+                {% endif %}
+            </p>
+            <ul class="anomaly-list">
+                {% for anomaly in anomalies %}
+                <li class="anomaly-item">
+                    <span class="anomaly-name">
+                        {% if chart_type == 'site' %}
+                            🏢 {{ anomaly.site }}
+                        {% else %}
+                            🔢 Cluster: {{ anomaly.cluster }}
+                        {% endif %}
+                    </span>
+                    <span class="anomaly-value">{{ anomaly.value }}L (+{{ anomaly.excess|round(2) }}L above mean)</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        
+        <!-- Distribution Info -->
+        {% if chart_type == 'distribution' and stats %}
+        <div class="info-box">
+            <strong>📊 Distribution Analysis:</strong><br>
+            Standard Deviation: {{ stats.std }}L<br>
+            Anomaly Threshold: {{ stats.threshold_low|round(2) }}L - {{ stats.threshold_high }}L<br>
+            <strong>Most Common Range:</strong> {{ stats.peak_range }} with {{ stats.peak_count }} sites ({{ stats.peak_percentage }}%) - This range represents typical consumption.<br>
+            {{ stats.anomaly_count }} of {{ stats.total_predictions }} predictions ({{ ((stats.anomaly_count / stats.total_predictions) * 100)|round(1) }}%) are outside normal range.
+        </div>
+        {% endif %}
+        
+        <!-- Comparison Info -->
+        {% if chart_type == 'comparison' and stats %}
+        <div class="info-box">
+            <strong>⚖️ Comparison Analysis:</strong><br>
+            Total Consumption Across All Clusters: {{ stats.total_consumption }}L<br>
+            <strong>Stacked bars:</strong> Each bar shows top site (colored) vs. other sites (top layer) per cluster.<br>
+            <strong>Hover tooltip shows:</strong> Cluster name, Value (2 decimals), Percentage.<br>
+            {% if stats.site_legend %}
+            <br><strong>🏆 Ranking of High Consumption Sites:</strong><br>
+            <small style="font-family: monospace;">{% for legend in stats.site_legend %}{{ legend }}<br>{% endfor %}</small>
+            <em>Colors in chart match legend order above.</em>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <!-- Time Series Info -->
+        {% if chart_type == 'timeseries' and stats %}
+        <div class="info-box">
+            <strong>📅 Time Series Analysis:</strong><br>
+            Date Column: {{ stats.date_column }}<br>
+            Fuel Column: {{ stats.fuel_column }}<br>
+            Number of Periods: {{ stats.periods }}<br>
+            Trend: {{ stats.trend }} ({{ stats.change_percent }}% change)<br>
+            First Period: {{ stats.first_value }}L  Last Period: {{ stats.last_value }}L
+        </div>
+        {% endif %}
+        
+        <!-- Navigation Links -->
+        <div style="display: flex; gap: 15px; margin-top: 20px;">
+            <a href="/" class="back-link">Back to Home</a>
+            <a href="/cache_stats" class="back-link" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);" target="_blank">📊 Monitoring Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

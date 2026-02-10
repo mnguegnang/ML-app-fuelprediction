@@ -1,0 +1,14 @@
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+.env
+
+fuel_app/
+
+Maxime_Upload_Predict/
+image/
+__pycache__/
+*.pyc
+logs/
+*.log

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>M-P INFRASTRUCTURE Fuel Consumption Prediction</title>
+</head>
+<body style="background-color:powderblue;">
+<h1 style="font-size:60px; color:#808080;">FUEL CONSUMPTION PREDICTION</h1>
+
+<img src="{{url_for('image', filename='M-Pimage.png')}}" width="150" height="200">
+<h2 style="font-size:40px; color:#808080;">Kindly select the features which match with each box</h2>
+
+
+
+
+	
+	<form method= "POST" action="/clustergraph">
+
+
+			<ul >
+
+					<li id="li_1" >
+		<label class="description" for="element_1">CLUSTER </label>
+		<div>
+			<select id="element_1" name="Cluster">
+			{% for cluster in col %}
+				<option>{{ cluster }}</option>
+			{% endfor %}
+			</select>
+		</div>
+		</li>
+				<li id="li_2" >
+		<label class="description" for="element_2">SITE NAME </label>
+		<div>
+			<select id="element_2" name="SITE Name">
+			{% for cluster in col %}
+				<option>{{ cluster }}</option>
+			{% endfor %}
+			</select>
+		</div>
+
+
+
+
+		</li>		<li id="li_3" >
+		<label class="description" for="element_3">PREVIOUS FUEL QTE </label>
+		<div>
+			<select id="element_3" name="PREVIOUS FUEL QTE">
+			{% for cluster in col %}
+				<option>{{ cluster }}</option>
+			{% endfor %}
+			</select>
+		</div>
+		</li>		<li id="li_4" >
+		<label class="description" for="element_4">QTE FUEL FOUND </label>
+		<div>
+			<select id="element_4" name="QTE FUEL FOUND">
+			{% for cluster in col %}
+				<option>{{ cluster }}</option>
+			{% endfor %}
+			</select>
+		</div>
+		</li>		<li id="li_5" >
+		<label class="description" for="element_5">TYPE OF GENERATOR </label>
+		<div>
+			<select id="element_5" name="TYPE OF GENERATOR">
+			{% for cluster in col %}
+				<option>{{ cluster }}</option>
+			{% endfor %}
+			</select>
+		</div>
+		</li>		<li id="li_6" >
+		<label class="description" for="element_6">RUNNING TIME </label>
+		<div>
+			<select id="element_6" name="RUNNING TIME">
+			{% for cluster in col %}
+				<option>{{ cluster }}</option>
+			{% endfor %}
+			</select>
+		</div>
+				</li>		<li id="li_7" >
+		<label class="description" for="element_7">CONSUMPTION RATE </label>
+		<div>
+			<select id="element_7" name="CONSUMPTION RATE">
+			{% for cluster in col %}
+				<option>{{ cluster }}</option>
+			{% endfor %}
+			</select>
+		</div>
+		</li>		<li id="li_8" >
+		<label class="description" for="element_8">NUMBER OF DAYS </label>
+		<div>
+			<select id="element_8" name="NUMBER OF DAYS">
+			{% for cluster in col %}
+				<option>{{ cluster }}</option>
+			{% endfor %}
+			</select>
+		</div>
+		</li>		<li id="li_9" >
+		<label class="description" for="element_9">OIL ADDED </label>
+		<div>
+			<select id="element_9" name="OIL ADDED">
+			{% for cluster in col %}
+				<option>{{ cluster }}</option>
+			{% endfor %}
+			</select>
+		</div>
+		</li>
+
+		</ul>
+
+		
+		<div>
+			<input type="submit"/>
+		</div>
+	</form>
+
+</body>
+</html>

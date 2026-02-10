@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuel Consumption Prediction</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Energy Blue Color Scheme - Professional Data Analytics Theme */
+        :root {
+            --header-primary: #1e3a8a;
+            --header-secondary: #3b82f6;
+            --bg-main: #f0f9ff;
+            --card-bg: #ffffff;
+            --primary-blue: #3b82f6;
+            --energy-orange: #f59e0b;
+            --success-green: #10b981;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e0f2fe;
+        }
+        
+        body {
+            background-color: var(--bg-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .header-section {
+            background: linear-gradient(135deg, var(--header-primary) 0%, var(--header-secondary) 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.15);
+        }
+        
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.08);
+            margin-bottom: 20px;
+            height: 100%;
+            transition: all 0.3s ease;
+            background-color: var(--card-bg);
+            border-left: 4px solid var(--primary-blue);
+        }
+        
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(59, 130, 246, 0.15);
+        }
+        
+        .card-header {
+            background: linear-gradient(to right, #eff6ff, #ffffff);
+            border-bottom: 2px solid var(--border-color);
+            font-weight: 600;
+            color: var(--text-dark);
+            padding: 15px 20px;
+            border-radius: 12px 12px 0 0 !important;
+        }
+        
+        .card-header i {
+            margin-right: 10px;
+            color: var(--primary-blue);
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Custom Input Styling */
+        .form-control {
+            border-radius: 8px;
+            border: 1.5px solid #cbd5e1;
+            padding: 10px 15px;
+            transition: all 0.2s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.15);
+            background-color: #ffffff;
+        }
+        
+        /* Warning Glow */
+        .form-control.is-warning {
+            border-color: var(--energy-orange);
+            padding-right: calc(1.5em + .75rem);
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23f59e0b' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23f59e0b' stroke='none'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right calc(.375em + .1875rem) center;
+            background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+        }
+        
+        .form-control.is-warning:focus {
+            border-color: var(--energy-orange);
+            box-shadow: 0 0 0 0.25rem rgba(245, 158, 11, 0.15);
+        }
+        
+        .btn-submit {
+            padding: 12px 40px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--energy-orange) 0%, #d97706 100%);
+            border: none;
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(245, 158, 11, 0.4);
+            background: linear-gradient(135deg, #d97706 0%, var(--energy-orange) 100%);
+        }
+        
+        .file-info-banner {
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(to right, #ffffff, #f0f9ff);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+            border-left: 5px solid var(--success-green);
+        }
+        
+        .alert {
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+        
+        /* Button Enhancements */
+        .btn-outline-primary {
+            border-color: var(--primary-blue);
+            color: var(--primary-blue);
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-blue);
+            border-color: var(--primary-blue);
+        }
+        
+        /* Badge Enhancements */
+        .badge.bg-primary {
+            background: linear-gradient(135deg, var(--primary-blue), #2563eb) !important;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+        }
+        
+        .badge.bg-success {
+            background: linear-gradient(135deg, var(--success-green), #059669) !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header-section text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Fuel Consumption Prediction</h1>
+            <p class="lead mb-0">Map your data columns to generate predictions</p>
+        </div>
+    </div>
+
+    <div class="container pb-5">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages mb-4">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- File Info -->
+        <div class="file-info-banner d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-file-excel fa-2x text-success me-3"></i>
+                <div>
+                    <h5 class="mb-0 text-secondary">Current Data File</h5>
+                    {% if is_uploaded %}
+                        <span class="text-success fw-bold">{{ filename }}</span>
+                    {% else %}
+                        <span class="text-muted">No file uploaded</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="btn-group">
+                <a href="/upload" class="btn btn-outline-primary"><i class="fas fa-upload me-2"></i>Upload New</a>
+                {% if is_uploaded %}
+                    <a href="/clear_upload" class="btn btn-outline-danger"><i class="fas fa-trash me-2"></i>Clear</a>
+                {% endif %}
+                <a href="/cache_stats" class="btn btn-outline-info" target="_blank"><i class="fas fa-chart-line me-2"></i>Monitoring Dashboard</a>
+            </div>
+        </div>
+
+        <!-- Model Information Card -->
+        {% if model_info %}
+        <div class="card mb-4" style="border-left: 5px solid #0d6efd;">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h5 class="mb-2">
+                            <i class="fas fa-brain text-primary"></i> 
+                            {{ model_info.name }} 
+                            <span class="badge bg-primary">v{{ model_info.version }}</span>
+                        </h5>
+                        <div class="row small text-muted">
+                            <div class="col-md-4">
+                                <i class="fas fa-calendar"></i> Trained: {{ model_info.training_date }}
+                            </div>
+                            <div class="col-md-4">
+                                <i class="fas fa-list"></i> Features: {{ model_info.feature_count }}
+                            </div>
+                            <div class="col-md-4">
+                                <i class="fas fa-chart-line"></i> R² Score: {{ "%.3f"|format(model_info.performance.r2_score) }}
+                            </div>
+                        </div>
+                        <div class="row small text-muted mt-1">
+                            <div class="col-md-4">
+                                <i class="fas fa-bullseye"></i> NSE: {{ "%.3f"|format(model_info.performance.nse) }}
+                            </div>
+                            <div class="col-md-4">
+                            </div>
+                            <div class="col-md-4">
+                                {% if model_info.status == 'loaded' %}
+                                    <span class="badge bg-success"><i class="fas fa-check-circle"></i> Loaded</span>
+                                {% else %}
+                                    <span class="badge bg-danger"><i class="fas fa-exclamation-circle"></i> Not Loaded</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-end">
+                        <a href="{{ url_for('model_info') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-info-circle"></i> View Details
+                        </a>
+                        <a href="{{ url_for('model_info_json') }}" class="btn btn-outline-secondary btn-sm mt-2 d-block" target="_blank">
+                            <i class="fas fa-code"></i> JSON API
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <form method="POST" action="/clustergraph" class="needs-validation" novalidate>
+            <!-- Data List for Typeahead -->
+            <datalist id="columnsList">
+                {% for column in col %}
+                    <option value="{{ column }}">
+                {% endfor %}
+            </datalist>
+
+            <div class="row g-4">
+                <!-- Section 1: Site Location -->
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <i class="fas fa-map-marker-alt"></i> Site Identification
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="element_1" class="form-label">Cluster Column</label>
+                                <input type="text" class="form-control" list="columnsList" id="element_1" name="Cluster" placeholder="Type to search..." required autocomplete="off" data-expected="Cluster">
+                                <div class="invalid-feedback">Please select a valid column.</div>
+                                <div class="warning-feedback text-warning small mt-1" style="display:none;"><i class="fas fa-exclamation-triangle me-1"></i> Warning: Recommended column is 'Cluster'</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="element_2" class="form-label">Site Name Column</label>
+                                <input type="text" class="form-control" list="columnsList" id="element_2" name="SITE Name" placeholder="Type to search..." required autocomplete="off" data-expected="SITE Name">
+                                <div class="invalid-feedback">Please select a valid column.</div>
+                                <div class="warning-feedback text-warning small mt-1" style="display:none;"><i class="fas fa-exclamation-triangle me-1"></i> Warning: Recommended column is 'SITE Name'</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Fuel Status -->
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <i class="fas fa-gas-pump"></i> Fuel Readings
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="element_3" class="form-label">Previous Fuel Qty (L)</label>
+                                <input type="text" class="form-control" list="columnsList" id="element_3" name="PREVIOUS FUEL QTE" placeholder="Type to search..." required autocomplete="off" data-expected="PREVIOUS FUEL QTE">
+                                <div class="invalid-feedback">Please select a valid column.</div>
+                                <div class="warning-feedback text-warning small mt-1" style="display:none;"><i class="fas fa-exclamation-triangle me-1"></i> Warning: Recommended column is 'PREVIOUS FUEL QTE'</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="element_4" class="form-label">Fuel Found Qty (L)</label>
+                                <input type="text" class="form-control" list="columnsList" id="element_4" name="QTE FUEL FOUND" placeholder="Type to search..." required autocomplete="off" data-expected="QTE FUEL FOUND">
+                                <div class="invalid-feedback">Please select a valid column.</div>
+                                <div class="warning-feedback text-warning small mt-1" style="display:none;"><i class="fas fa-exclamation-triangle me-1"></i> Warning: Recommended column is 'QTE FUEL FOUND'</div>
+                            </div>
+                             <div class="mb-3">
+                                <label for="element_9" class="form-label">FUEL Added (L)</label>
+                                <input type="text" class="form-control" list="columnsList" id="element_9" name="FUEL ADDED" placeholder="Type to search..." required autocomplete="off" data-expected="FUEL ADDED">
+                                <div class="invalid-feedback">Please select a valid column.</div>
+                                <div class="warning-feedback text-warning small mt-1" style="display:none;"><i class="fas fa-exclamation-triangle me-1"></i> Warning: Recommended column is 'FUEL ADDED'</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3: Equipment Details -->
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <i class="fas fa-cogs"></i> Generator Details
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="element_5" class="form-label">Type of Generator</label>
+                                <input type="text" class="form-control" list="columnsList" id="element_5" name="TYPE OF GENERATOR" placeholder="Type to search..." required autocomplete="off" data-expected="TYPE OF GENERATOR">
+                                <div class="invalid-feedback">Please select a valid column.</div>
+                                <div class="warning-feedback text-warning small mt-1" style="display:none;"><i class="fas fa-exclamation-triangle me-1"></i> Warning: Recommended column is 'TYPE OF GENERATOR'</div>
+                                <div class="form-text mt-2 text-muted small">
+                                    <i class="fas fa-info-circle me-1"></i> Ensure your dataset includes 'GENERATOR 1 CAPACITY (KVA)' for valid predictions.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Operational Details -->
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <i class="fas fa-chart-line"></i> Operational Details
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="element_6" class="form-label">Running Time (Hours)</label>
+                                <input type="text" class="form-control" list="columnsList" id="element_6" name="RUNNING TIME" placeholder="Type to search..." required autocomplete="off" data-expected="RUNNING TIME">
+                                <div class="invalid-feedback">Please select a valid column.</div>
+                                <div class="warning-feedback text-warning small mt-1" style="display:none;"><i class="fas fa-exclamation-triangle me-1"></i> Warning: Recommended column is 'RUNNING TIME'</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="element_7" class="form-label">Consumption Rate (L/Hr)</label>
+                                <input type="text" class="form-control" list="columnsList" id="element_7" name="CONSUMPTION RATE" placeholder="Type to search..." required autocomplete="off" data-expected="CONSUMPTION RATE">
+                                <div class="invalid-feedback">Please select a valid column.</div>
+                                <div class="warning-feedback text-warning small mt-1" style="display:none;"><i class="fas fa-exclamation-triangle me-1"></i> Warning: Recommended column is 'CONSUMPTION RATE'</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="element_8" class="form-label">Duration (Days)</label>
+                                <input type="text" class="form-control" list="columnsList" id="element_8" name="NUMBER OF DAYS" placeholder="Type to search..." required autocomplete="off" data-expected="NUMBER OF DAYS">
+                                <div class="invalid-feedback">Please select a valid column.</div>
+                                <div class="warning-feedback text-warning small mt-1" style="display:none;"><i class="fas fa-exclamation-triangle me-1"></i> Warning: Recommended column is 'NUMBER OF DAYS'</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-5">
+                <button type="submit" class="btn btn-primary btn-submit">
+                    <i class="fas fa-rocket me-2"></i>Generate Predictions
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Form validation script
+        (function () {
+            'use strict'
+            
+            // 1. Validation Logic
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+
+            // 2. Case-Insensitive Autocorrect and Strict Matching
+            const inputs = document.querySelectorAll('input[list="columnsList"]');
+            const dataList = document.getElementById('columnsList');
+            
+            // Extract options for easier matching
+            const options = Array.from(dataList.options).map(opt => opt.value);
+            const lowerOptionsMap = {};
+            options.forEach(opt => {
+                lowerOptionsMap[opt.toLowerCase()] = opt;
+            });
+
+            inputs.forEach(input => {
+                const validateInput = function() {
+                    const val = input.value.trim();
+                    const warningEl = input.parentNode.querySelector('.warning-feedback');
+                    const expected = input.getAttribute('data-expected');
+                    
+                    if (!val) {
+                        input.setCustomValidity('Please fill out this field.');
+                        input.classList.remove('is-warning');
+                        if (warningEl) warningEl.style.display = 'none';
+                        return;
+                    }
+
+                    const lowerVal = val.toLowerCase();
+                    
+                    // 1. Check if it's a valid column from the list
+                    if (!lowerOptionsMap[lowerVal]) {
+                        input.setCustomValidity('Please select a valid column name from the list.');
+                        input.classList.remove('is-warning');
+                        if (warningEl) warningEl.style.display = 'none';
+                        return;
+                    }
+                    
+                    // It is valid, reset error
+                    input.setCustomValidity(''); 
+                    
+                    // 2. Check for Warning Condition (mismatch from expected)
+                    if (expected && lowerVal !== expected.toLowerCase()) {
+                        input.classList.add('is-warning');
+                        if (warningEl) warningEl.style.display = 'block';
+                    } else {
+                        input.classList.remove('is-warning');
+                        if (warningEl) warningEl.style.display = 'none';
+                    }
+
+                    // Auto-correction casing if match found
+                    if (lowerOptionsMap[lowerVal] && input.value !== lowerOptionsMap[lowerVal]) {
+                        input.value = lowerOptionsMap[lowerVal];
+                    }
+                };
+
+                input.addEventListener('change', validateInput);
+                input.addEventListener('blur', validateInput);
+                
+                // Clear error as user types, but don't aggressively warn until blur/change
+                input.addEventListener('input', function() {
+                   this.setCustomValidity('');
+                });
+            });
+
+        })()
+    </script>
+</body>
+</html>

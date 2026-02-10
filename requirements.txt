@@ -1,0 +1,34 @@
+# Fuel Consumption Prediction Application - Dependencies
+# Install all packages: pip install -r requirements.txt
+
+# Core Web Framework
+Flask==2.2.5
+gunicorn
+
+# For handling HTTP requests and responses
+Werkzeug==2.2.3
+
+
+# Data Processing & Analysis
+pandas==1.3.5
+numpy==1.19.5
+
+scipy==1.7.3
+
+# Machine Learning
+scikit-learn==0.20.4
+
+
+
+# Excel File Support
+openpyxl==3.1.3
+xlrd==2.0.2
+
+# Chart Generation
+pygal==2.4.0
+
+# Optional: PNG Export from SVG (requires system libraries)
+cairosvg==2.7.1
+
+# Additional Utils (extensions to the standard datetime module)
+python-dateutil==2.9.0
