@@ -17,7 +17,7 @@ A Flask-based web application for predicting fuel consumption in power generatio
 
 ## 🎯 Overview
 
-This application provides an end-to-end solution for predicting fuel consumption at generator sites using a trained machine learning model (GradientBoostingRegressor). Users can upload Excel data files, generate predictions, visualize results through interactive charts, and export data in multiple formats.
+This application provides an end-to-end solution for predicting fuel consumption at generator sites using a trained machine learning model (RandomForestRegressor). Users can upload Excel data files, generate predictions, visualize results through interactive charts, and export data in multiple formats.
 
 **Key Metrics:**
 - Model Performance: NSE = 0.9816 (excellent accuracy)
@@ -95,7 +95,7 @@ fuel_prediction_app/
 2. **validation_utils.py** (132 lines): Form validation, column resolution, data checks
 3. **data_utils.py** (175 lines): Caching system, data retrieval, cache management
 4. **model_utils.py** (95 lines): Model loading, metadata extraction
-5. **metrics_utils.py** (241 lines): NSE calculation, statistics, anomaly detection
+5. **metrics_utils.py** (241 lines): NSE calculation, statistics, warning for potential anomaly
 6. **chart_utils.py** (378 lines): Pygal chart generation for all chart types
 7. **export_utils.py** (450 lines): Multi-format export generation
 
@@ -131,31 +131,19 @@ pip install -r requirements.txt
 
 **That's it!** All required packages will be installed automatically.
 
-### Manual Installation (Alternative)
-
-If you prefer to install packages individually:
-
-```bash
-# Core dependencies
-pip install Flask>=2.3.0 pandas>=2.0.0 numpy>=1.24.0
-pip install scikit-learn>=1.3.0 pygal>=3.0.0 openpyxl>=3.1.0
-
-# Optional: For PNG export (requires system libraries)
-pip install cairosvg>=2.7.0
-```
 
 ### Required Dependencies
 
 The application requires the following packages (automatically installed with `requirements.txt`):
 
-- **Flask** (>=2.3.0): Web framework
-- **pandas** (>=2.0.0): Data manipulation
-- **numpy** (>=1.24.0): Numerical operations
-- **scikit-learn** (>=1.3.0): Machine learning model support
-- **pygal** (>=3.0.0): Chart generation
-- **openpyxl** (>=3.1.0): Excel file support
-- **xlrd** (>=2.0.0): Legacy Excel format support
-- **cairosvg** (>=2.7.0, optional): PNG export from SVG charts
+- **Flask** (==2.2.5): Web framework
+- **pandas** (==1.3.5): Data manipulation
+- **numpy** (==1.19.5): Numerical operations
+- **scikit-learn** (==0.20.4): Machine learning model support
+- **pygal** (==2.4.0): Chart generation
+- **openpyxl** (==3.1.3): Excel file support
+- **xlrd** (==2.0.2): Legacy Excel format support
+- **cairosvg** (==2.7.1, optional): PNG export from SVG charts
 
 ### Verify Installation
 
