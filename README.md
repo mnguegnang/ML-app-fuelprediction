@@ -1,6 +1,6 @@
 # Fuel Consumption Prediction Application
 
-A Flask-based web application for predicting fuel consumption in power generation plant using machine learning.
+A Flask-based web application for predicting fuel consumption in power generation plants using machine learning.
 
 ## 📋 Table of Contents
 
@@ -536,7 +536,7 @@ if __name__ == '__main__':
 
 ## 📊 Model Information
 
-**Algorithm**: GradientBoostingRegressor (scikit-learn)
+**Algorithm**: RandomForestRegressor (scikit-learn)
 
 **Performance**:
 - Nash-Sutcliffe Efficiency (NSE): 0.9816 (excellent)
@@ -567,16 +567,14 @@ if __name__ == '__main__':
 - All functionality in columns_app.py
 - Basic caching and validation
 
-## 👥 Contributors
+## Author
 
-**AIMS-Cameroon Fuel Prediction Team**
+**Gabin Maxime Nguegnang**
 - Application Development
 - ML Model Training
 - Refactoring & Optimization
 
-## 📄 License
 
-Internal use - AIMS-Cameroon
 
 ## 🤝 Support
 
