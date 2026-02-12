@@ -64,17 +64,17 @@ fuel_prediction_app/
 ├── logs/                       # Application logs
 ├── templates/                  # HTML templates
 ├── utils/                      # Utility modules (7 modules)
-│   ├── file_utils.py          # File operations & validation
-│   ├── validation_utils.py    # Input & data validation
-│   ├── data_utils.py          # Caching & data management
-│   ├── model_utils.py         # Model loading & metadata
-│   ├── metrics_utils.py       # Performance metrics & NSE
-│   ├── chart_utils.py         # Chart generation (Pygal)
-│   └── export_utils.py        # Export functionality
+│   ├── file_utils.py           # File operations & validation
+│   ├── validation_utils.py     # Input & data validation
+│   ├── data_utils.py           # Caching & data management
+│   ├── model_utils.py          # Model loading & metadata
+│   ├── metrics_utils.py        # Performance metrics & NSE
+│   ├── chart_utils.py          # Chart generation (Pygal)
+│   └── export_utils.py         # Export functionality
 └── routes/                     # Route blueprints (3 modules)
-    ├── main_routes.py         # Main pages & prediction logic
+    ├── main_routes.py          # Main pages & prediction logic
     ├── visualization_routes.py # Chart generation routes
-    └── export_routes.py       # Export/download routes
+    └── export_routes.py        # Export/download routes
 ```
 
 ### Module Overview
