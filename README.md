@@ -76,64 +76,8 @@ fuel_prediction_app/
     ├── visualization_routes.py # Chart generation routes
     └── export_routes.py        # Export/download routes
 ```
-
-<!-- START ARCHITECTURE SECTION -->
-<div style="background-color: #f8f9fa; border: 1px solid #e1e4e8; border-radius: 6px; padding: 20px; margin-bottom: 20px;">
-    
-    <h3 style="margin-top: 0; border-bottom: 1px solid #eaecef; padding-bottom: 10px;">System Architecture</h3>
-    
-    <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start;">
-        
-        <!-- LEFT COLUMN: FILE TREE (Fixed with <pre> tag) -->
-        <div style="flex: 1; min-width: 300px;">
-<pre style="background: #2d333b; color: #adbac7; padding: 15px; border-radius: 6px; font-family: 'Consolas', 'Monaco', monospace; font-size: 0.85em; line-height: 1.4; margin: 0; overflow-x: auto; white-space: pre; border: none;">
-fuel_prediction_app/
-├── columns_app.py
-├── config.py
-├── pkl_objects/
-│   └── filename.joblib
-├── uploads/
-├── logs/
-├── templates/
-├── utils/
-│   ├── file_utils.py
-│   ├── validation_utils.py
-│   ├── data_utils.py
-│   ├── model_utils.py
-│   ├── metrics_utils.py
-│   ├── chart_utils.py
-│   └── export_utils.py
-└── routes/
-    ├── main_routes.py
-    ├── visualization_routes.py
-    └── export_routes.py
-</pre>
-        </div>
-
-        <!-- RIGHT COLUMN: EXPLANATION -->
-        <div style="flex: 1; min-width: 280px;">
-            <p style="margin-top: 0;"><strong>Modular Design Pattern</strong><br>
-            The project uses <strong>Flask Blueprints</strong> to decouple API logic from visualization.</p>
-            
-            <ul style="padding-left: 20px;">
-                <li style="margin-bottom: 10px;">
-                    <code>utils/</code><br>
-                    <span style="font-size: 0.9em; color: #666;">Contains pure Python logic (validation, feature engineering) isolated from the web framework. This allows for unit testing without the Flask context.</span>
-                </li>
-                <li style="margin-bottom: 10px;">
-                    <code>routes/</code><br>
-                    <span style="font-size: 0.9em; color: #666;">Handles HTTP requests. By separating <em>Visualization</em> routes from <em>Export</em> routes, the codebase remains readable.</span>
-                </li>
-                <li style="margin-bottom: 10px;">
-                    <code>pkl_objects/</code><br>
-                    <span style="font-size: 0.9em; color: #666;">The Random Forest model is serialized using Joblib and loaded into memory <strong>once</strong> at startup, reducing inference latency.</span>
-                </li>
-            </ul>
-        </div>
-        
-    </div>
-</div>
-<!-- END ARCHITECTURE SECTION -->
+### System Architecture
+<img src="images/system_architecture.png" alt="System Architecture" width="100%">
 
 
 ### Module Overview
