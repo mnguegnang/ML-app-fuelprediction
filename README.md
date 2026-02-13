@@ -53,30 +53,6 @@ This application provides an end-to-end solution for predicting fuel consumption
 ## 🏗️ Architecture
 
 The application follows a modular blueprint architecture for maintainability and scalability.
-
-```:
-fuel_prediction_app/
-├── columns_app.py              # Main application (191 lines)
-├── config.py                   # Configuration constants
-├── pkl_objects/
-│   └── filename.joblib         # Trained ML model
-├── uploads/                    # User uploaded files
-├── logs/                       # Application logs
-├── templates/                  # HTML templates
-├── utils/                      # Utility modules (7 modules)
-│   ├── file_utils.py           # File operations & validation
-│   ├── validation_utils.py     # Input & data validation
-│   ├── data_utils.py           # Caching & data management
-│   ├── model_utils.py          # Model loading & metadata
-│   ├── metrics_utils.py        # Performance metrics & NSE
-│   ├── chart_utils.py          # Chart generation (Pygal)
-│   └── export_utils.py         # Export functionality
-└── routes/                     # Route blueprints (3 modules)
-    ├── main_routes.py          # Main pages & prediction logic
-    ├── visualization_routes.py # Chart generation routes
-    └── export_routes.py        # Export/download routes
-```
-### System Architecture
 <img src="system_architecture.png" alt="System Architecture" width="100%">
 
 
