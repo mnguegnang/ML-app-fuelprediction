@@ -77,7 +77,7 @@ fuel_prediction_app/
     └── export_routes.py        # Export/download routes
 ```
 ### System Architecture
-<img src="images/system_architecture.png" alt="System Architecture" width="100%">
+<img src="system_architecture.png" alt="System Architecture" width="100%">
 
 
 ### Module Overview
