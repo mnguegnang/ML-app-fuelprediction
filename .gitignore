@@ -12,3 +12,14 @@ __pycache__/
 *.pyc
 logs/
 *.log
+
+# Ignore the following files
+fix_exports.py
+fix_indent_final.py
+fix_timeseries_export.py
+fix_timeseries_v2.py
+test_validation.py
+
+# Ignore excel files
+*.xlsx
+*.xls

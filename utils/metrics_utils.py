@@ -1,6 +1,6 @@
 """
 Metrics tracking and statistical analysis utilities
-Handles request metrics, NSE calculation, anomaly detection, and prediction statistics
+Handles request metrics, NSE calculation, warning for possible anomaly, and prediction statistics
 """
 
 import time
@@ -132,7 +132,7 @@ def calculate_prediction_statistics(predictions, clusters, sites, nse_value=None
 
 def detect_anomalies(predictions_series, multiplier=2):
     """
-    Detect anomalies in predictions using standard deviation threshold.
+    Warning about anomalies in predictions using standard deviation threshold.
     
     Args:
         predictions_series: pandas Series or array of predictions
