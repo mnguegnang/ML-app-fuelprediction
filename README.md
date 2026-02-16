@@ -58,25 +58,25 @@ The application follows a modular blueprint architecture for maintainability and
 
 ### Module Overview
 
-**Application Core** (`columns_app.py` - 191 lines):
+**Application Core** (`columns_app.py`):
 - Flask app initialization and configuration
 - Blueprint registration
 - Model loading
 - Metrics tracking setup
 
-**Route Blueprints** (3 modules, ~1100 lines total):
-1. **main_routes.py** (~600 lines): Homepage, upload, model info, cache stats, core prediction logic
-2. **visualization_routes.py** (~450 lines): 5 chart types (cluster, site, distribution, comparison, time-series)
-3. **export_routes.py** (~300 lines): 5 export endpoints (CSV, Excel, text, SVG, PNG)
+**Route Blueprints** :
+1. **main_routes.py** : Homepage, upload, model info, cache stats, core prediction logic
+2. **visualization_routes.py** : 5 chart types (cluster, site, distribution, comparison, time-series)
+3. **export_routes.py** : 5 export endpoints (CSV, Excel, text, SVG, PNG)
 
-**Utility Modules** (7 modules, ~1700 lines total):
-1. **file_utils.py** (254 lines): File validation, Excel reading, sheet detection
-2. **validation_utils.py** (132 lines): Form validation, column resolution, data checks
-3. **data_utils.py** (175 lines): Caching system, data retrieval, cache management
-4. **model_utils.py** (95 lines): Model loading, metadata extraction
-5. **metrics_utils.py** (241 lines): NSE calculation, statistics, warning for potential anomaly
-6. **chart_utils.py** (378 lines): Pygal chart generation for all chart types
-7. **export_utils.py** (450 lines): Multi-format export generation
+**Utility Modules** :
+1. **file_utils.py** : File validation, Excel reading, sheet detection
+2. **validation_utils.py** : Form validation, column resolution, data checks
+3. **data_utils.py** : Caching system, data retrieval, cache management
+4. **model_utils.py** : Model loading, metadata extraction
+5. **metrics_utils.py** : NSE calculation, statistics, warning for potential anomaly
+6. **chart_utils.py** : Pygal chart generation for all chart types
+7. **export_utils.py** : Multi-format export generation
 
 **Total Codebase**: ~3200 lines (down from 2178 lines in single file, +47% more functionality, better organization)
 
@@ -295,11 +295,9 @@ export SECRET_KEY='your-secret-key'  # Override app.secret_key
 - **Allowed Extensions**: .xlsx, .xls, .ods
 - **Validation**: File format, sheet names, required columns
 
-## � For Collaborators
 
-### Quick Setup for Team Members
-
-Share this repository with your team. Collaborators can get started quickly:
+## Quick Setup 
+To reproduce the results or run the dashboard locally, follow these steps:
 
 ```bash
 # 1. Clone the repository
@@ -332,19 +330,6 @@ pip freeze > requirements.txt
 echo "new-package>=1.0.0" >> requirements.txt
 ```
 
-### For Different Python Versions
-
-The app supports Python 3.7+. If you need specific version compatibility:
-
-```bash
-# Create environment with specific Python version
-python3.8 -m venv fuel_app_env
-python3.9 -m venv fuel_app_env
-
-# Then install requirements as usual
-pip install -r requirements.txt
-```
-
 ### Dependencies Troubleshooting
 
 **Issue**: Package installation fails
@@ -371,7 +356,7 @@ brew install cairo pango
 # https://www.lfd.uci.edu/~gohlke/pythonlibs/#cairosvg
 ```
 
-## �🔧 Development
+## 🔧 Development
 
 ### Code Organization Best Practices
 
