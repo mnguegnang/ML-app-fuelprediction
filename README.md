@@ -21,14 +21,14 @@ This application provides an end-to-end solution for predicting fuel consumption
 
 **Key Metrics:**
 - Model Performance: NSE = 0.9816 (excellent accuracy)
-- Supported Data: 6000+ sites across multiple clusters
+- Supported Data: fuel consumption data from 282 sites across multiple clusters
 - Export Formats: CSV, Excel, SVG, PNG, Text summaries
 
 ## ✨ Features
 
 ### Core Functionality
 - **📤 File Upload**: Secure Excel file upload with validation (.xlsx, .xls, .ods)
-- **🤖 ML Predictions**: Generate fuel consumption predictions using GradientBoostingRegressor
+- **🤖 ML Predictions**: Generate fuel consumption predictions using Random Forest Regressor
 - **📊 Interactive Visualizations**:
   - Cluster-level bar chart with anomaly detection
   - Top 20 sites horizontal bar chart
@@ -41,7 +41,7 @@ This application provides an end-to-end solution for predicting fuel consumption
   - SVG vector graphics
   - PNG raster images (requires cairosvg)
 - **📈 Performance Monitoring**: Real-time metrics tracking and cache statistics
-- **🔍 Anomaly Detection**: Automatic identification of high-consumption sites
+- **🔍 Deviation Warning System**: Automatic identification of high-consumption sites
 
 ### Technical Features
 - In-memory caching for fast performance
