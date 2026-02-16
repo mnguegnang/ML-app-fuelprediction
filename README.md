@@ -158,8 +158,8 @@ Access at: `http://localhost:6003`
    - Required columns: Cluster, Site Name, Previous Fuel Qty, Fuel Found, etc.
 
 2. **Generate Predictions**
-   - Select columns from dropdown menus on homepage
-   - Click "Predict" button
+   - Start typing to select columns from dropdown menus on homepage
+   - Click the "Generate Predictions" button
    - View cluster-level predictions
 
 3. **Visualize Results**
@@ -258,7 +258,7 @@ Access at: `http://localhost:6003`
 # Model Configuration
 MODEL_PATH = 'pkl_objects/filename.joblib'
 MODEL_METADATA = {
-    'name': 'GradientBoostingRegressor',
+    'name': 'RandomForestRegressor',
     'version': '0.20.4',
     'nse_on_real_data': 0.9816,
     ...
