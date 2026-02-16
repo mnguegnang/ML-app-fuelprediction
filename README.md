@@ -78,11 +78,11 @@ The application follows a modular blueprint architecture for maintainability and
 6. **chart_utils.py** : Pygal chart generation for all chart types
 7. **export_utils.py** : Multi-format export generation
 
-**Total Codebase**: ~3200 lines (down from 2178 lines in single file, +47% more functionality, better organization)
 
-## 🚀 Installation
+## Quick Setup 
+To reproduce the results or run the dashboard locally, follow these steps:
 
-### Prerequisites
+### 🚀 Prerequisites 
 
 - Python 3.7+
 - pip package manager
@@ -294,41 +294,6 @@ export SECRET_KEY='your-secret-key'  # Override app.secret_key
 - **Max Size**: 100 MB
 - **Allowed Extensions**: .xlsx, .xls, .ods
 - **Validation**: File format, sheet names, required columns
-
-
-## Quick Setup 
-To reproduce the results or run the dashboard locally, follow these steps:
-
-```bash
-# 1. Clone the repository
-git clone <repository-url>
-cd Prediction_visualization
-
-# 2. Create virtual environment
-python -m venv fuel_app_env
-source fuel_app_env/bin/activate  # Linux/Mac
-# or: fuel_app_env\Scripts\activate  # Windows
-
-# 3. Install all dependencies (one command!)
-pip install -r requirements.txt
-
-# 4. Start the application
-python columns_app.py
-```
-
-**That's it!** The `requirements.txt` file ensures everyone has the exact same package versions.
-
-### Sharing Your Environment
-
-If you've added new packages, update `requirements.txt`:
-
-```bash
-# Generate from your current environment
-pip freeze > requirements.txt
-
-# Or manually add specific packages
-echo "new-package>=1.0.0" >> requirements.txt
-```
 
 ### Dependencies Troubleshooting
 
