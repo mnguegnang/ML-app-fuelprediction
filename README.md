@@ -24,11 +24,11 @@ This application provides an end-to-end solution for predicting fuel consumption
 - Supported Data: fuel consumption data from 282 sites across multiple clusters
 - Export Formats: CSV, Excel, SVG, PNG, Text summaries
 
-## ✨ Features
+## Features
 
 ### Core Functionality
 - **📤 File Upload**: Secure Excel file upload with validation (.xlsx, .xls, .ods)
-- **🤖 ML Predictions**: Generate fuel consumption predictions using Random Forest Regressor
+- ** ML Predictions**: Generate fuel consumption predictions using Random Forest Regressor
 - **📊 Interactive Visualizations**:
   - Cluster-level bar chart with anomaly detection
   - Top 20 sites horizontal bar chart
@@ -50,7 +50,7 @@ This application provides an end-to-end solution for predicting fuel consumption
 - Nash-Sutcliffe Efficiency (NSE) calculation for model validation
 - Dynamic column name resolution for flexible data formats
 
-## 🏗️ Architecture
+## Architecture
 
 The application follows a modular blueprint architecture for maintainability and scalability.
 <img src="system_architecture.png" alt="System Architecture" width="100%">
@@ -82,7 +82,7 @@ The application follows a modular blueprint architecture for maintainability and
 ## Quick Setup 
 To reproduce the results or run the dashboard locally, follow these steps:
 
-### 🚀 Prerequisites 
+### Prerequisites 
 
 - Python 3.7+
 - pip package manager
@@ -321,7 +321,7 @@ brew install cairo pango
 # https://www.lfd.uci.edu/~gohlke/pythonlibs/#cairosvg
 ```
 
-## 🔧 Development
+##  Development
 
 ### Code Organization Best Practices
 
