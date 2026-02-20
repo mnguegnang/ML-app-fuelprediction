@@ -394,7 +394,7 @@ Logs are written to `logs/fuel_app_YYYYMMDD.log` with format:
 - WARNING: Warning messages (non-critical issues)
 - ERROR: Error messages (critical issues)
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
