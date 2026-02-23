@@ -28,7 +28,7 @@ This application provides an end-to-end solution for predicting fuel consumption
 
 ### Core Functionality
 - **📤 File Upload**: Secure Excel file upload with validation (.xlsx, .xls, .ods)
-- ** ML Predictions**: Generate fuel consumption predictions using Random Forest Regressor
+- **ML Predictions**: Generate fuel consumption predictions using Random Forest Regressor
 - **📊 Interactive Visualizations**:
   - Cluster-level bar chart with anomaly detection
   - Top 20 sites horizontal bar chart
